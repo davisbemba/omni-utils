@@ -1,8 +1,9 @@
 [workspace]
 resolver = "2"
 members = ["omni-utils", "omni-utils-derive"]
-# Test contracts are excluded from the workspace because they target wasm32 and
-# must NOT inherit the `non-contract-usage` near-sdk feature.
+# Test contracts are excluded from the workspace because they target wasm32.
+# The published near-sdk dependency uses default-features = false so downstream
+# wasm contracts cannot inherit `non-contract-usage` through feature unification.
 exclude = ["tests/test-contract", "tests/test-contract-custom"]
 
 [workspace.package]
@@ -16,6 +17,6 @@ serde = "1"
 serde_json = "1"
 proc-macro2 = "1"
 syn = { version = "2", features = ["full"] }
-near-sdk = { version = ">=5.28.1", features = ["non-contract-usage"] }
+near-sdk = { version = ">=5.28.1", default-features = false }
 omni-utils = { path = "omni-utils" }
 omni-utils-derive = { path = "omni-utils-derive" }
